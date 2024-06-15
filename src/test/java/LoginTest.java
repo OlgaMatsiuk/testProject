@@ -1,48 +1,25 @@
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.concurrent.TimeUnit;
+public class LoginTest extends TestBase{
 
-public class LoginTest {
-
-    WebDriver wd;
-
-    @BeforeTest
+    @BeforeMethod
     public void precondition(){
-        wd = new ChromeDriver();
-        wd.get("https://testing.cloud.cyberm8.com/");
-        wd.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-    }
-    public void type(By locator, String text){
-        WebElement element = wd.findElement(locator);
-        element.click();
-        element.clear();
-        element.sendKeys(text);
-    }
-    public void click (By locator){
-        wd.findElement(locator).click();
-    }
 
+        if(!app.getUser().isElementPresent(By.xpath("//img[@class='logo__img']"))){
+            System.out.println("The site did not open");
+            app.tearDown();
+
+        }
+
+    }
 
     @Test
-    public void testMethod(){
-        type(By.id("username"), "admin");
-        type(By.id("password"), "REZ1ucp2drw8gdp@efj");
-        click(By.id("loginBtn"));
+    public void userFormPositive(){
+        app.getUser().fillLoginForm("admin", "REZ1ucp2drw8gdp@efj");
+        app.getUser().clickLoginButton();
 
     }
-
-    @AfterTest
-    public void postcondition(){
-
-        //wd.quit();
-
-    }
-
 
 }
