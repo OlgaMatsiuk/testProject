@@ -1,6 +1,9 @@
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HelperBase {
 
@@ -11,23 +14,37 @@ public class HelperBase {
     }
 
     public void type(By locator, String text){
-        WebElement element = wd.findElement(locator);
+        //WebElement element = wd.findElement(locator);
+        WebElement element;
+        element = new WebDriverWait(wd, 10).until(ExpectedConditions.elementToBeClickable(locator));
         element.click();
         element.clear();
         element.sendKeys(text);
+       // element.sendKeys(Keys.ENTER);
+
     }
 
+
     public void click(By locator){
-        wd.findElement(locator).click();
+        WebElement element;
+        element = new WebDriverWait(wd, 10).until(ExpectedConditions.elementToBeClickable(locator));
+        element.click();
+
     }
     public boolean isElementPresent(By locator){
-        return wd.findElements(locator).size() > 0;
+        try{
+            return wd.findElements(locator).size() > 0;
+
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
-    public void pause(int millis) {
+    public void pause(int millis){
         try {
             Thread.sleep(millis);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

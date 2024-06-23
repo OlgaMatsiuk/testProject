@@ -8,12 +8,15 @@ public class ApplicationManager {
     WebDriver wd;
     HelperUser user;
 
+    TaskListPageAction taskList;
+
     public void init(){
         wd = new ChromeDriver();
         wd.navigate().to("https://testing.cloud.cyberm8.com/");
-        wd.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
+       // wd.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
 
         user = new HelperUser(wd);
+        taskList = new TaskListPageAction(wd);
 
     }
     public void tearDown() {
@@ -24,5 +27,7 @@ public class ApplicationManager {
         return user;
     }
 
-
+    public TaskListPageAction getTaskList() {
+        return taskList;
+    }
 }
