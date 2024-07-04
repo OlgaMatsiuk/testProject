@@ -1,9 +1,8 @@
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.List;
 
 public class HelperBase {
 
@@ -13,22 +12,26 @@ public class HelperBase {
         this.wd = wd;
     }
 
-    public void type(By locator, String text){
-        //WebElement element = wd.findElement(locator);
-        WebElement element;
-        element = new WebDriverWait(wd, 10).until(ExpectedConditions.elementToBeClickable(locator));
-        element.click();
-        element.clear();
-        element.sendKeys(text);
+    public void type(WebElement elInput, String text)  {
+       /*
+         WebElement element = wd.findElement(locator);
+         WebElement element;
+         element = new WebDriverWait(wd, 10).until(ExpectedConditions.visibilityOf(locator));
+        */
+
+        new WebDriverWait(wd, 10).until(ExpectedConditions.visibilityOf(elInput));
+
+        elInput.clear();
+        elInput.sendKeys(text);
        // element.sendKeys(Keys.ENTER);
 
     }
 
 
-    public void click(By locator){
-        WebElement element;
-        element = new WebDriverWait(wd, 10).until(ExpectedConditions.elementToBeClickable(locator));
-        element.click();
+    public void click(WebElement clickElement){
+       // WebElement clickElement;
+        new WebDriverWait(wd, 10).until(ExpectedConditions.visibilityOf(clickElement));
+        clickElement.click();
 
     }
     public boolean isElementPresent(By locator){
