@@ -13,17 +13,11 @@ public class HelperBase {
     }
 
     public void type(WebElement elInput, String text)  {
-       /*
-         WebElement element = wd.findElement(locator);
-         WebElement element;
-         element = new WebDriverWait(wd, 10).until(ExpectedConditions.visibilityOf(locator));
-        */
 
         new WebDriverWait(wd, 10).until(ExpectedConditions.visibilityOf(elInput));
 
         elInput.clear();
         elInput.sendKeys(text);
-       // element.sendKeys(Keys.ENTER);
 
     }
 

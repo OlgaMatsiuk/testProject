@@ -45,8 +45,7 @@ public class AddTaskPageSection extends HelperBase {
     public void clickPencilBtn(){
         click(pencilBtn);
     }
-           // app.getUser().type(textAreaLabel,"I want to add my new task");
-       // app.getUser().type(By.xpath("//textarea[@id='textarea-input']"),"I want to add my new task");
+
 
     public void inputDescription(String description){
         type(textAreaLabel, description);
@@ -58,10 +57,6 @@ public class AddTaskPageSection extends HelperBase {
 
 
     }
-
-
-
-
 
 
 }

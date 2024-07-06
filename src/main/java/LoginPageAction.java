@@ -6,9 +6,6 @@ import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
 
-//@FindBy(how = How.XPATH, using = "//textarea[@id='textarea-input']")
-//public WebElement textAreaLabel;
-
 public class LoginPageAction extends HelperBase{
 
     public LoginPageAction(WebDriver wd) {
@@ -26,11 +23,6 @@ public class LoginPageAction extends HelperBase{
     public WebElement userPasswordInput;
 
 
-
-//    public LoginPageAction(WebDriver wd) {
-//        super(wd);
-//        PageFactory.initElements(wd, this);
-//    }
 
     public void fillLoginForm(String name, String password) {
         //type(By.id("username"),name);
