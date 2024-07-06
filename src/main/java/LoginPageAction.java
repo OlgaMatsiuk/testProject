@@ -19,10 +19,8 @@ public class LoginPageAction extends HelperBase{
     @FindBy(how = How.ID, using = "loginBtn")
     public WebElement loginBtn;
 
-      @FindBy(how = How.XPATH, using = "//input[@id='username']")
-      public WebElement userNameInput;
-//    @FindBy(how = How.ID, using = "username")
-//    public WebElement userNameInput;
+    @FindBy(how = How.XPATH, using = "//input[@id='username']")
+    public WebElement userNameInput;
 
     @FindBy(how = How.ID, using ="password")
     public WebElement userPasswordInput;
@@ -42,6 +40,11 @@ public class LoginPageAction extends HelperBase{
 
     public void clickLoginButton(){
         click(loginBtn);
+    }
+
+    public void login(String name, String password){
+        fillLoginForm(name, password);
+        clickLoginButton();
     }
 
 

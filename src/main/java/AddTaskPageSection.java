@@ -26,7 +26,11 @@ public class AddTaskPageSection extends HelperBase {
 
     @FindBy(how = How.XPATH, using = "//textarea[@id='textarea-input']")
     public WebElement textAreaLabel;
+    @FindBy(how = How.XPATH, using = "//div[@class='ng-input']//input[@role='combobox']")
+    public WebElement taskCategoryInput;
 
+    @FindBy(how=How.XPATH, using = "//div[@class='ng-dropdown-panel-items scroll-host']")
+    public WebElement optionTaskCategory;
 
 
     public void search (String name) {
@@ -47,6 +51,15 @@ public class AddTaskPageSection extends HelperBase {
     public void inputDescription(String description){
         type(textAreaLabel, description);
     }
+
+    public void inputTaskCategory(String category){
+        type(taskCategoryInput, category);
+        click(optionTaskCategory);
+
+
+    }
+
+
 
 
 

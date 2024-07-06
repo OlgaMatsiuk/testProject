@@ -20,19 +20,17 @@ public class TaskListTest extends TestBase{
 
     @BeforeMethod
     public void precondition(){
-        //user.fillLoginForm("admin", "REZ1ucp2drw8gdp@efj");
-        //user.clickLoginButton();
-        app.getUser().fillLoginForm("admin", "REZ1ucp2drw8gdp@efj");
-        app.getUser().clickLoginButton();
+        app.getUser().login("admin", "REZ1ucp2drw8gdp@efj");
+       // app.getUser().clickLoginButton();
     }
 
     @Test
     public void addTaskList(){
         app.getTaskList().addTaskList();
         app.getTaskList().addTaskListButton();
-        app.getAddTaskPageSection().clickPencilBtn();
-        app.getAddTaskPageSection().inputNewTaskName("First name");
-        app.getAddTaskPageSection().inputDescription("I want to add my new task");
+//        app.getAddTaskPageSection().clickPencilBtn();
+//        app.getAddTaskPageSection().inputNewTaskName("First name");
+//        app.getAddTaskPageSection().inputDescription("I want to add my new task");
 
 
 

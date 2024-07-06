@@ -28,6 +28,7 @@ public class TaskListPageAction extends HelperBase{
 
     public void addTaskList() {
         click(addTaskList);
+
     }
 
     public void addTaskListButton () {

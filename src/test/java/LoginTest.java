@@ -18,10 +18,8 @@ public class LoginTest extends TestBase{
 
     @Test
     public void userFormPositive(){
-        //user.fillLoginForm("admin", "REZ1ucp2drw8gdp@efj");
-        //user.fillLoginForm("admin", "REZ1ucp2drw8gdp@efj");
-        app.getUser().fillLoginForm("admin", "REZ1ucp2drw8gdp@");
-        app.getUser().clickLoginButton();
+
+        app.getUser().login("admin", "REZ1ucp2drw8gdp@");
 
     }
 
