@@ -3,26 +3,19 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class ApplicationManager {
-
     WebDriver wd;
     LoginPageAction user;
 
     TaskListPageAction taskList;
 
-    AddTaskPageSection addTaskPageSection;
-
     public void init(){
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         wd = new ChromeDriver(options);
-        //wd = new ChromeDriver();
         wd.navigate().to("https://testing.cloud.cyberm8.com/");
-       // wd.manage().timeouts().implicitlyWait(4, TimeUnit.SECONDS);
-
+        wd.manage().window().maximize();
         user = new LoginPageAction(wd);
         taskList = new TaskListPageAction(wd);
-        addTaskPageSection = new AddTaskPageSection(wd);
-
     }
 
     public void tearDown() {
@@ -37,7 +30,4 @@ public class ApplicationManager {
         return taskList;
     }
 
-    public AddTaskPageSection getAddTaskPageSection() {
-        return addTaskPageSection;
-    }
 }

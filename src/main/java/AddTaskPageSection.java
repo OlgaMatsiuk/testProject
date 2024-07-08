@@ -1,6 +1,6 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -12,7 +12,7 @@ public class AddTaskPageSection extends HelperBase {
         PageFactory.initElements(wd, this);
     }
 
-    @FindBy(how = How.XPATH, using = "//input[@placeholder='Search...']")
+    @FindBy(how = How.XPATH, using = "//input[@placeholder='Search...']") //app-left-sidebar//input[@type='search']
     public WebElement searchInput;
 
     @FindBy(how = How.XPATH, using = "//div[@class='collapse']//app-action-list/div[1]")
@@ -23,29 +23,48 @@ public class AddTaskPageSection extends HelperBase {
 
     @FindBy(how = How.XPATH, using = "//input[contains(@class,'form-control form-control-xsm')]")
     public WebElement taskNameInput;
-
-    @FindBy(how = How.XPATH, using = "//textarea[@id='textarea-input']")
+    @FindBy(how = How.ID, using = "textarea-input")
     public WebElement textAreaLabel;
-    @FindBy(how = How.XPATH, using = "//div[@class='ng-input']//input[@role='combobox']")
+
+    @FindBy(how = How.XPATH, using = "//ng-select[@name='category']//input[@role='combobox']")
     public WebElement taskCategoryInput;
 
     @FindBy(how=How.XPATH, using = "//div[@class='ng-dropdown-panel-items scroll-host']")
     public WebElement optionTaskCategory;
 
+    @FindBy(how=How.XPATH, using = "//div[@class='w-100 collapse-menu']//button[2]")
+    public WebElement addNewActionsBtn;
+
+    @FindBy(how=How.XPATH, using = "//div[@class='collapse'][2]")
+    public WebElement Sourcelocator;
+
+    @FindBy(how=How.XPATH, using = "//div[@class='step-card p-1']")
+    public WebElement clickAfterDragAndDrop;
+
+    @FindBy(how=How.XPATH, using = "//div[@class='drop-area']")
+    public WebElement Destinationlocator;
+    @FindBy(how=How.XPATH, using = "//div[@class='d-flex flex-column']//input[1]")
+    public WebElement parametersInputLoopFor;
+
+    @FindBy(how=How.XPATH, using = "//div[@class='d-flex flex-column']//input[2]")
+    public WebElement parametersInputLoopOf;
+
+    @FindBy(how=How.XPATH, using = "//div[@id='param-card']//input")
+    public WebElement parametersMilliseconds;
+    @FindBy(how=How.XPATH, using = "//div[@class='main-toolbar']//button[@title='Save']//i")
+    public WebElement saveButton;
 
     public void search (String name) {
         type(searchInput, name);
         click(searchResult);
     }
     public void inputNewTaskName(String newName){
-        click(pencilBtn);
+        clickPencilBtn();
         type(taskNameInput,newName);
     }
-
     public void clickPencilBtn(){
         click(pencilBtn);
     }
-
 
     public void inputDescription(String description){
         type(textAreaLabel, description);
@@ -54,9 +73,26 @@ public class AddTaskPageSection extends HelperBase {
     public void inputTaskCategory(String category){
         type(taskCategoryInput, category);
         click(optionTaskCategory);
-
-
     }
-
+    public void clickNewActionsButton(){
+        click(addNewActionsBtn);
+    }
+    public void dragAndDrop(){
+        Actions action = new Actions(wd);
+        action.dragAndDrop(Sourcelocator, Destinationlocator).build().perform();
+        click(clickAfterDragAndDrop);
+    }
+    public void parametersLoopFor(String parameters){
+        type(parametersInputLoopFor, parameters);
+    }
+    public void parametersLoopOf(String parameters){
+        type(parametersInputLoopOf, parameters);
+    }
+    public void parametersMilliseconds(String parameters){
+        type(parametersMilliseconds, parameters);
+    }
+    public void saveButton(){
+        click(saveButton);
+    }
 
 }

@@ -1,25 +1,27 @@
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
-import java.io.IOException;
-
 public class TestBase {
-    //WebDriver wd;
+    private String username;
+    private String password;
 
     public static ApplicationManager app = new ApplicationManager();
 
     @BeforeSuite
-
-    public void setUp() throws IOException {
+    public void setUp() {
         app.init();
-
+        username = "admin";
+        password = "REZ1ucp2drw8gdp@efj";
     }
+
     @AfterSuite
     public void stop(){
         app.tearDown();
     }
 
+    public void login(){
+        app.getUser().fillLoginForm(username, password);
+        app.getUser().clickLoginButton();
+    }
 
 }

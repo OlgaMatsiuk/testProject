@@ -1,14 +1,12 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-import org.testng.annotations.BeforeMethod;
 
 public class TaskListPageAction extends HelperBase{
 
+    AddTaskPageSection addTaskPageSection;
 
     public TaskListPageAction(WebDriver wd) {
         super(wd);
@@ -19,22 +17,20 @@ public class TaskListPageAction extends HelperBase{
     @FindBy(how = How.XPATH, using = "//ul[@id='collapseTasks']//li")
     public WebElement addTaskList;
 
-    @FindBy(how = How.XPATH, using = "//button[text()=' Add task ']")
-    public WebElement addTaskListBtn;
-
-    private final AddTaskPageSection addTaskPageSection;
-
-
+    @FindBy(how = How.XPATH, using = "//button[contains(text(), 'Add task')]")
+    public WebElement addTaskBtn;
 
     public void addTaskList() {
         click(addTaskList);
-
     }
 
     public void addTaskListButton () {
-         click(addTaskListBtn);
+         click(addTaskBtn);
     }
 
+    public AddTaskPageSection getAddTaskPageSection() {
+        return addTaskPageSection;
+    }
 
 }
 

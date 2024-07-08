@@ -1,4 +1,3 @@
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,16 +15,14 @@ public class LoginPageAction extends HelperBase{
     @FindBy(how = How.ID, using = "loginBtn")
     public WebElement loginBtn;
 
-    @FindBy(how = How.XPATH, using = "//input[@id='username']")
+    @FindBy(how = How.ID, using = "username")
     public WebElement userNameInput;
 
     @FindBy(how = How.ID, using ="password")
     public WebElement userPasswordInput;
 
 
-
     public void fillLoginForm(String name, String password) {
-        //type(By.id("username"),name);
         type(userNameInput, name);
         type(userPasswordInput,password);
     }
@@ -38,6 +35,5 @@ public class LoginPageAction extends HelperBase{
         fillLoginForm(name, password);
         clickLoginButton();
     }
-
 
 }
