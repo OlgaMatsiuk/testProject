@@ -5,7 +5,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 public class ApplicationManager {
     WebDriver wd;
     LoginPageAction user;
-
     TaskListPageAction taskList;
 
     public void init(){
@@ -14,19 +13,19 @@ public class ApplicationManager {
         wd = new ChromeDriver(options);
         wd.navigate().to("https://testing.cloud.cyberm8.com/");
         wd.manage().window().maximize();
-        user = new LoginPageAction(wd);
-        taskList = new TaskListPageAction(wd);
     }
 
     public void tearDown() {
         wd.quit();
     }
 
-    public LoginPageAction getUser() {
+    public LoginPageAction getLoginPage() {
+        user = new LoginPageAction(wd);
         return user;
     }
 
-    public TaskListPageAction getTaskList() {
+    public TaskListPageAction getTaskListPage() {
+        taskList = new TaskListPageAction(wd);
         return taskList;
     }
 

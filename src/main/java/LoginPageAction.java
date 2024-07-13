@@ -4,12 +4,15 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-
 public class LoginPageAction extends HelperBase{
+    private final String username;
+    private final String password;
 
     public LoginPageAction(WebDriver wd) {
         super(wd);
         PageFactory.initElements(wd, this);
+        username = "admin";
+        password = "REZ1ucp2drw8gdp@efj";
     }
 
     @FindBy(how = How.ID, using = "loginBtn")
@@ -31,8 +34,8 @@ public class LoginPageAction extends HelperBase{
         click(loginBtn);
     }
 
-    public void login(String name, String password){
-        fillLoginForm(name, password);
+    public void login(){
+        fillLoginForm(username, password);
         clickLoginButton();
     }
 
