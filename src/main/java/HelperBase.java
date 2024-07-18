@@ -18,7 +18,7 @@ public class HelperBase {
 
     public void click(WebElement clickElement){
        // WebElement clickElement;
-        new WebDriverWait(wd, 10).until(ExpectedConditions.visibilityOf(clickElement));
+        new WebDriverWait(wd, 15).until(ExpectedConditions.visibilityOf(clickElement));
         clickElement.click();
 
     }
@@ -29,6 +29,10 @@ public class HelperBase {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public void refresh(){
+        wd.navigate().refresh();
     }
 
     public void pause(){

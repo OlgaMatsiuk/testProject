@@ -1,3 +1,4 @@
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -14,37 +15,34 @@ public class AddTaskPageSection extends HelperBase {
         PageFactory.initElements(wd, this);
     }
 
-    @FindBy(how = How.XPATH, using = "//input[@placeholder='Search...']") //app-left-sidebar//input[@type='search']
+    @FindBy(how = How.XPATH, using = "//app-left-sidebar[@class='left-sidebar']//input")
     public WebElement searchInput;
 
     @FindBy(how = How.XPATH, using = "//div[@class='collapse']//app-action-list/div[1]")
     public WebElement searchResult;
 
-    @FindBy(how = How.XPATH, using = "//button[contains(@class,'round-btn btn-icon-behavior')]//i[@class='mdi mdi-pencil']")
-    public WebElement pencilBtn;
+    @FindBy(how = How.XPATH, using = "//div[@class='chart-flow-right-bar']//app-editable-input//i[contains(@class,'mdi-pencil')]")
+    public WebElement pencilBtn;  //button[contains(@class,'round-btn btn-icon-behavior')]//i[@class='mdi mdi-pencil']- был раньше локатор, поменяла
 
-    @FindBy(how = How.XPATH, using = "//input[contains(@class,'form-control form-control-xsm w75')]")
-    public WebElement taskNameInput;
+    @FindBy(how = How.XPATH, using = "//app-editable-input[contains(@class,'ng-untouched')]//input")
+    public WebElement taskNameInput;  //input[contains(@class,'form-control form-control-xsm w75')]- поменяла локатор
     @FindBy(how = How.ID, using = "textarea-input")
     public WebElement textAreaLabel;
 
     @FindBy(how = How.XPATH, using = "//ng-select[@name='category']//input[@role='combobox']")
     public WebElement taskCategoryInput;
 
-    @FindBy(how=How.XPATH, using = "//div[@class='ng-dropdown-panel-items scroll-host']")
-    public WebElement optionTaskCategory;
-
-    @FindBy(how=How.XPATH, using = "//div[@class='w-100 collapse-menu']//button[2]")
-    public WebElement addNewActionsBtn;
+    @FindBy(how=How.XPATH, using = "//ng-dropdown-panel//div[contains(@class,'ng-dropdown-panel-items')]")
+    public WebElement optionTaskCategory;  //div[@class='ng-dropdown-panel-items scroll-host']
 
     @FindBy(how=How.XPATH, using = "//div[@class='collapse'][2]")
-    public WebElement sourcelocator;
+    public WebElement sourceLocator;
 
-    @FindBy(how=How.XPATH, using = "//div[@class='step-card p-1']")
+    @FindBy(how=How.XPATH, using = "//div[contains(@class,'step-card')]")
     public WebElement clickAfterDragAndDrop;
 
     @FindBy(how=How.XPATH, using = "//div[@class='drop-area']")
-    public WebElement destinationlocator;
+    public WebElement destinationLocator;
     @FindBy(how=How.XPATH, using = "//div[@class='d-flex flex-column']//input[1]")
     public WebElement parametersInputLoopFor;
 
@@ -57,7 +55,7 @@ public class AddTaskPageSection extends HelperBase {
     public WebElement saveButton;
 
 
-    public void search (String name) {
+    public void searchInSidebar (String name) {
         type(searchInput, name);
         click(searchResult);
     }
@@ -82,12 +80,12 @@ public class AddTaskPageSection extends HelperBase {
         type(taskCategoryInput, category);
         click(optionTaskCategory);
     }
-    public void clickNewActionsButton(){
-        click(addNewActionsBtn);
+    public String getTaskNameFromToolbar(){
+        return wd.findElement(By.xpath("//div[@class='task-title mr-1']")).getText();
     }
     public void dragAndDrop(){
         Actions action = new Actions(wd);
-        action.dragAndDrop(sourcelocator, destinationlocator).build().perform();
+        action.dragAndDrop(sourceLocator, destinationLocator).build().perform();
         click(clickAfterDragAndDrop);
     }
     public void parametersLoopFor(String parameters){
