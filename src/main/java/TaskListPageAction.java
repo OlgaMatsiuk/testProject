@@ -1,3 +1,4 @@
+import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
+
+import static org.awaitility.Awaitility.await;
+
 
 public class TaskListPageAction extends HelperBase{
 
@@ -28,9 +32,6 @@ public class TaskListPageAction extends HelperBase{
         return detailsTaskSection;
     }
 
-    public DetailsTaskSection getDetailsTaskPage() {
-        return detailsTaskSection;
-    }
 
     @FindBy(how = How.XPATH, using = "//ul[@id='collapseTasks']//li")
     public WebElement taskListBtnInDashboard;
@@ -40,7 +41,7 @@ public class TaskListPageAction extends HelperBase{
 
     @FindBy(how = How.XPATH, using = "//table[contains(@class,'table')]//tr")
     public List<WebElement> tasks;
-    @FindBy(how = How.XPATH, using = "//table//tr//a") //не использовала классы, т.к они меняются(например после поиска таска в search классы у таска другие)
+    @FindBy(how = How.XPATH, using = "//table//tr//a")
     public WebElement taskName;
     @FindBy(how=How.XPATH, using = "//table[contains(@class,'table')]//button[contains(@class,'btn-secondary')]")
     public WebElement runButton;
@@ -52,7 +53,7 @@ public class TaskListPageAction extends HelperBase{
     @FindBy(how=How.XPATH, using = "//div[@class='btn-group']//button[@title='delete']")
     public WebElement deleteTaskBtn;
 
-    @FindBy(how=How.XPATH, using = "//div[@id='button']//button[2]")
+    @FindBy(how=How.XPATH, using = "//*[@role='dialog']//button[2]")
     public WebElement confirmDeleteBtn;
 
     @FindBy(how=How.XPATH, using = "//input[@id='searchInput']")
@@ -60,7 +61,7 @@ public class TaskListPageAction extends HelperBase{
 
     public void clickTaskListBtnInDashboard() {
         click(taskListBtnInDashboard);
-        pause();
+        waitForTable();
     }
 
     public void clickAddTaskButton () {
@@ -68,7 +69,7 @@ public class TaskListPageAction extends HelperBase{
     }
 
     public int getAmountOfTasks()  {
-        pause();
+        waitForTable();
         if (isElementPresent(By.xpath("//span[normalize-space()='No items found.']")))
             return 0;
         else {
@@ -79,20 +80,15 @@ public class TaskListPageAction extends HelperBase{
     public void typeNameTaskInSearch(String name){
         click(searchTask);
         type(searchTask, name);
-        pause();
+        waitForTable();
     }
     public String getTaskName(){
         new WebDriverWait(wd, 15).until(ExpectedConditions.elementToBeClickable(taskName));
         return taskName.getText().trim();
     }
+    //TODO Olga fix method
     public boolean isTaskPresent(String name){
-        pause();
-        for (WebElement task: tasks){
-            if(taskName.getText().equalsIgnoreCase(name)){ //тут я скорее всего не правильно сделала, не думаю что он проходит по всем таскам, скорее всего только по первому,не знаю как сделать более правильно
-                return true;
-            }
-        }
-        return false;
+        return tasks.stream().map(task -> getTextOfTask(task).equalsIgnoreCase(name)).count()==1;
     }
     public void runTaskClick(){
         pause();
@@ -101,6 +97,7 @@ public class TaskListPageAction extends HelperBase{
         click(detailsButton);
     }
     public Integer getNumberUsageInTask(){
+
         new WebDriverWait(wd, 20).until(ExpectedConditions.visibilityOf(tasks.get(0)));
         WebElement element=wd.findElement(By.xpath("//table//tr//span//span")); //тут не ставила классы в локаторе,т.к при каждом запуске ран классы меняются -странно так)
         String[] elements=element.getText().split(":");
@@ -110,6 +107,17 @@ public class TaskListPageAction extends HelperBase{
         click(deleteTaskBtn);
         new WebDriverWait(wd, 20).until(ExpectedConditions.elementToBeClickable(confirmDeleteBtn));
         click(confirmDeleteBtn);
+    }
+    public boolean waitForTable(){
+        boolean isTablePressent = false;
+        await().atMost(Duration.TWO_MINUTES).pollInterval(Duration.FIVE_SECONDS).ignoreExceptions().until(()->{
+            return tasks.size()>0 || isElementPresent(By.xpath("//span[normalize-space()='No items found.']"));
+        });
+        isTablePressent=tasks.size()>0 || isElementPresent(By.xpath("//span[normalize-space()='No items found.']"));
+        return isTablePressent;
+    }
+    private String getTextOfTask(WebElement task){
+        return task.findElement(By.xpath("//a[contains(@class, 'details-lnk')")).getText();
     }
 }
 

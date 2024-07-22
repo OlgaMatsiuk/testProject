@@ -35,7 +35,7 @@ public class AddTaskPageSection extends HelperBase {
     @FindBy(how=How.XPATH, using = "//ng-dropdown-panel//div[contains(@class,'ng-dropdown-panel-items')]")
     public WebElement optionTaskCategory;  //div[@class='ng-dropdown-panel-items scroll-host']
 
-    @FindBy(how=How.XPATH, using = "//div[@class='collapse'][2]")
+    @FindBy(how=How.XPATH, using = "//*[@class='left-sidebar']//div[@class='collapse'][2]")
     public WebElement sourceLocator;
 
     @FindBy(how=How.XPATH, using = "//div[contains(@class,'step-card')]")
@@ -51,7 +51,7 @@ public class AddTaskPageSection extends HelperBase {
 
     @FindBy(how=How.XPATH, using = "//div[@id='param-card']//input")
     public WebElement parametersMilliseconds;
-    @FindBy(how=How.XPATH, using = "//div[@class='main-toolbar']//button[@title='Save']//i")
+    @FindBy(how=How.XPATH, using = "//div[@class='main-toolbar']//button[@title='Save']")
     public WebElement saveButton;
 
 
@@ -83,21 +83,21 @@ public class AddTaskPageSection extends HelperBase {
     public String getTaskNameFromToolbar(){
         return wd.findElement(By.xpath("//div[@class='task-title mr-1']")).getText();
     }
-    public void dragAndDrop(){
+    public void dragAndDropAction(){
         Actions action = new Actions(wd);
         action.dragAndDrop(sourceLocator, destinationLocator).build().perform();
         click(clickAfterDragAndDrop);
     }
-    public void parametersLoopFor(String parameters){
+    public void setParametersLoopFor(String parameters){
         type(parametersInputLoopFor, parameters);
     }
-    public void parametersLoopOf(String parameters){
+    public void setParametersLoopOf(String parameters){
         type(parametersInputLoopOf, parameters);
     }
-    public void parametersMilliseconds(String parameters){
+    public void setParametersMilliseconds(String parameters){
         type(parametersMilliseconds, parameters);
     }
-    public void saveButton(){
+    public void clickOfSaveButton(){
         click(saveButton);
     }
 

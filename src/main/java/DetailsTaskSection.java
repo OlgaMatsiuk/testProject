@@ -1,3 +1,4 @@
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,10 +23,15 @@ public class DetailsTaskSection extends HelperBase{
     @FindBy(how = How.XPATH, using = "//div[@class='third-line']//small[4]")
     public WebElement message;
 
-    public String  getStatus(){
+    public Boolean  waitForStatusWillBeExpected(String expectedStatus){
         new WebDriverWait(wd,10).until(ExpectedConditions.visibilityOf(status));
-        while (status.getText().equals("In progress")){} //(статус долго крутиться In progress и только потом меняется. Я придумала зациклить пока не поменяется статус -знаю что корявое решение)
-        return status.getText();
+        try{
+            new WebDriverWait(wd,10).until(ExpectedConditions.textToBePresentInElement(status, expectedStatus));
+            return true;
+        }catch (TimeoutException e){
+            e.printStackTrace();
+            return false;
+        }
     }
     public String  getTaskName(){
         new WebDriverWait(wd,10).until(ExpectedConditions.visibilityOf(taskName));

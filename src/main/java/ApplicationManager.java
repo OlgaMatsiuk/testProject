@@ -6,6 +6,12 @@ public class ApplicationManager {
     WebDriver wd;
     LoginPageAction user;
     TaskListPageAction taskList;
+    TargetsPage targetsPage;
+
+    public TargetsPage getTargetsPage() {
+        targetsPage=new TargetsPage(wd);
+        return targetsPage;
+    }
 
     public void init(){
         ChromeOptions options = new ChromeOptions();

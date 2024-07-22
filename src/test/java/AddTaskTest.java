@@ -3,11 +3,12 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class AddTaskTest extends TestBase{
-    int i = (int)(System.currentTimeMillis()/1000)%3600;
+    int randomNumber = (int)(System.currentTimeMillis()/1000)%360;
     int countUsageRun, countUsageAfterRun;
-    String newTaskName= "-" + i;
+    String newTaskName= "-sleep-" + randomNumber;
     String currentName;
     int amountTaskBefore=0, amountTaskAfter=0;
+    String nameOfAction="sleep";
     TaskListPageAction taskListPageAction;
     AddTaskPageSection addTaskPageSection;
     DetailsTaskSection detailsTaskSection;
@@ -50,23 +51,23 @@ public class AddTaskTest extends TestBase{
 
     @Test(priority = 70)
     public void addActionSidebar(){
-        addTaskPageSection.searchInSidebar("sleep");
-        addTaskPageSection.dragAndDrop();
+        addTaskPageSection.searchInSidebar(nameOfAction);
+        addTaskPageSection.dragAndDropAction();
 
     }
 
     @Test(priority = 80)
     public void parametersLoopForOfTestInAction(){
-        addTaskPageSection.parametersLoopFor("3");
-        addTaskPageSection.parametersLoopOf("");
+        addTaskPageSection.setParametersLoopFor("3");
+        addTaskPageSection.setParametersLoopOf("");
     }
     @Test(priority = 90)
     public void parametersMillisecondsTest(){
-        addTaskPageSection.parametersMilliseconds("5000");
+        addTaskPageSection.setParametersMilliseconds("5000");
     }
     @Test(priority = 100)
     public void saveTask(){
-        addTaskPageSection.saveButton();
+        addTaskPageSection.clickOfSaveButton();
     }
     @Test(priority = 110)
     public void taskNameFromToolbar(){
@@ -114,8 +115,8 @@ public class AddTaskTest extends TestBase{
 
     @Test(priority = 200)
     public void statusTaskTest(){
-        addTaskPageSection.pause();
-        Assert.assertEquals(detailsTaskSection.getStatus(),"Complete");
+        //addTaskPageSection.pause();
+        Assert.assertTrue(detailsTaskSection.waitForStatusWillBeExpected("Complete"),"Status is not expected");
     }
     @Test(priority =210)
     public void checkUsageIncreased(){
@@ -123,14 +124,14 @@ public class AddTaskTest extends TestBase{
         countUsageRun= taskListPageAction.getNumberUsageInTask();
         runTask();
         goToTaskList();
-        addTaskPageSection.refresh(); //(метод goToTaskList не обновил количество, пришлось рефреш делать)
-        addTaskPageSection.pause(); //(без паузы количество не успевает поменяться)
+        addTaskPageSection.refresh();
+        taskListPageAction.waitForTable();
         countUsageAfterRun= taskListPageAction.getNumberUsageInTask();
         Assert.assertEquals(countUsageAfterRun-countUsageRun, 1);
     }
     @Test(priority =215)
     public void typeNameInSearch(){
-        goToTaskList();
+        //goToTaskList();
         taskListPageAction.typeNameTaskInSearch("New task"+newTaskName);
         Assert.assertEquals(taskListPageAction.getTaskName(), "New task"+newTaskName);
     }
@@ -141,6 +142,7 @@ public class AddTaskTest extends TestBase{
     }
     @Test(priority =230)
     public void isTaskWasDeleted(){
+        taskListPageAction.waitForTable();
         Assert.assertFalse(taskListPageAction.isTaskPresent("New task"+newTaskName));
     }
 }
