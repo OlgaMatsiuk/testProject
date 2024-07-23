@@ -1,10 +1,13 @@
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 public class AddTargetTest extends TestBase{
+    int randomNumber = (int)(System.currentTimeMillis()/1000)%360;
+    String targetName = "Virus Total Olga Test- "+randomNumber;
     TargetsPage targetsPage;
     String targetType="Virus Total Web API";
-    String newTargetGroupName="Virus Total Olga";
+    String newTargetGroupName="Virus Total Olga Group- "+randomNumber;
     String APIKey="12345";
     @BeforeClass
     public void precondition(){
@@ -22,7 +25,7 @@ public class AddTargetTest extends TestBase{
     }
     @Test(priority =30)
     public void typeTargetNameInForm(){
-        targetsPage.typeTargetName("Virus Total Olga Test");
+        targetsPage.typeTargetName(targetName);
     }
     @Test(priority =40)
     public void typeTargetTypeInForm(){
@@ -39,11 +42,29 @@ public class AddTargetTest extends TestBase{
         targetsPage.typeAPIKey(APIKey);
     }
     @Test(priority =70)
-    public void confirmAPIKeyAction(){
+    public void wrongAPIKeyTest(){
+        targetsPage.confirmAPIKey(APIKey+"5");
+        targetsPage.clickSaveButton();
+        Assert.assertEquals(targetsPage.getTextDanger(), "Password & Confirm Password does not match.");
+    }
+    @Test(priority =75)
+    public void typeConfirmAPIKey(){
         targetsPage.confirmAPIKey(APIKey);
     }
     @Test(priority = 80)
     public void saveBtnAction(){
         targetsPage.clickSaveButton();
     }
+    @Test(priority =90)
+    public void typeInSearchTarget(){
+        targetsPage.typeSearchTarget(targetName);
+        targetsPage.isTargetPresent(targetName);
+    }
+    @Test(priority =100)
+    public void typeInSearchGroup(){
+        clickToTargetsBtn();
+        targetsPage.typeSearchGroup(newTargetGroupName);
+        targetsPage.isGroupPresent(newTargetGroupName);
+    }
+
 }

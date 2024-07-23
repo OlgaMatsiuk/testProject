@@ -30,12 +30,10 @@ public class AddTaskTest extends TestBase{
     public void getAmountTaskBefore(){
         amountTaskBefore= taskListPageAction.getAmountOfTasks();
     }
-
     @Test(priority = 30)
     public void clickAddTaskButton(){
         taskListPageAction.clickAddTaskButton();
     }
-
     @Test(priority = 40)
     public void inputTaskName(){
         addTaskPageSection.inputNewTaskName(newTaskName);
@@ -48,14 +46,11 @@ public class AddTaskTest extends TestBase{
     public void inputTaskCategory(){
         addTaskPageSection.inputTaskCategory("Default");
     }
-
     @Test(priority = 70)
     public void addActionSidebar(){
         addTaskPageSection.searchInSidebar(nameOfAction);
         addTaskPageSection.dragAndDropAction();
-
     }
-
     @Test(priority = 80)
     public void parametersLoopForOfTestInAction(){
         addTaskPageSection.setParametersLoopFor("3");
@@ -82,24 +77,19 @@ public class AddTaskTest extends TestBase{
     public void NewTaskPresentTest(){
         Assert.assertEquals(amountTaskAfter-amountTaskBefore,1);
     }
-
-
     @Test(priority = 140)
     public void runTask(){
         goToTaskList();
         taskListPageAction.runTaskClick();
     }
-
     @Test(priority = 150)
     public void nameTaskTest(){
         Assert.assertEquals("New task"+newTaskName, currentName);
     }
-
     @Test(priority = 160)
     public void checkNameInDetailsTest(){
         Assert.assertEquals(detailsTaskSection.getTaskName(), currentName);
     }
-
     @Test(priority = 170)
     public void errorsTest(){
         Assert.assertEquals(detailsTaskSection.getErrorsInRun(),"0 error(s)");
@@ -112,10 +102,8 @@ public class AddTaskTest extends TestBase{
     public void messageTest(){
         Assert.assertEquals(detailsTaskSection.getMessageInRun(),"0 message(s)");
     }
-
     @Test(priority = 200)
     public void statusTaskTest(){
-        //addTaskPageSection.pause();
         Assert.assertTrue(detailsTaskSection.waitForStatusWillBeExpected("Complete"),"Status is not expected");
     }
     @Test(priority =210)
@@ -131,7 +119,6 @@ public class AddTaskTest extends TestBase{
     }
     @Test(priority =215)
     public void typeNameInSearch(){
-        //goToTaskList();
         taskListPageAction.typeNameTaskInSearch("New task"+newTaskName);
         Assert.assertEquals(taskListPageAction.getTaskName(), "New task"+newTaskName);
     }

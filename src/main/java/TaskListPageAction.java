@@ -109,7 +109,7 @@ public class TaskListPageAction extends HelperBase{
         click(confirmDeleteBtn);
     }
     public boolean waitForTable(){
-        boolean isTablePressent = false;
+        boolean isTablePressent;
         await().atMost(Duration.TWO_MINUTES).pollInterval(Duration.FIVE_SECONDS).ignoreExceptions().until(()->{
             return tasks.size()>0 || isElementPresent(By.xpath("//span[normalize-space()='No items found.']"));
         });
