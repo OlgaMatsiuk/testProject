@@ -1,3 +1,6 @@
+import Pages.AddTaskPageSection;
+import Pages.DetailsTaskSection;
+import Pages.TaskListPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -9,9 +12,9 @@ public class AddTaskTest extends TestBase{
     String currentName;
     int amountTaskBefore=0, amountTaskAfter=0;
     String nameOfAction="sleep";
-    TaskListPageAction taskListPageAction;
-    AddTaskPageSection addTaskPageSection;
-    DetailsTaskSection detailsTaskSection;
+    public TaskListPage taskListPageAction;
+    public AddTaskPageSection addTaskPageSection;
+    public DetailsTaskSection detailsTaskSection;
 
 
     @BeforeClass

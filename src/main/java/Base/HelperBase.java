@@ -1,10 +1,12 @@
+package Base;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class HelperBase {
-    WebDriver wd;
+    public WebDriver wd;
 
     public HelperBase(WebDriver wd) {
         this.wd = wd;

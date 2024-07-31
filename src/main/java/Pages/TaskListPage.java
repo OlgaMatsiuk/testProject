@@ -1,3 +1,6 @@
+package Pages;
+
+import Base.HelperBase;
 import org.awaitility.Duration;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -12,13 +15,11 @@ import java.util.List;
 
 import static org.awaitility.Awaitility.await;
 
-
-public class TaskListPageAction extends HelperBase{
-
+public class TaskListPage extends HelperBase {
     AddTaskPageSection addTaskPageSection;
     DetailsTaskSection detailsTaskSection;
 
-    public TaskListPageAction(WebDriver wd) {
+    public TaskListPage(WebDriver wd) {
         super(wd);
         addTaskPageSection = new AddTaskPageSection(wd);
         detailsTaskSection = new DetailsTaskSection(wd);
@@ -32,13 +33,10 @@ public class TaskListPageAction extends HelperBase{
         return detailsTaskSection;
     }
 
-
     @FindBy(how = How.XPATH, using = "//ul[@id='collapseTasks']//li")
     public WebElement taskListBtnInDashboard;
-
     @FindBy(how = How.XPATH, using = "//button[contains(text(), 'Add task')]")
     public WebElement addTaskBtn;
-
     @FindBy(how = How.XPATH, using = "//table[contains(@class,'table')]//tr")
     public List<WebElement> tasks;
     @FindBy(how = How.XPATH, using = "//table//tr//a")
@@ -49,15 +47,13 @@ public class TaskListPageAction extends HelperBase{
     public WebElement runButtonModalWindow;
     @FindBy(how=How.XPATH, using = "//a[@class='link-primary']")
     public WebElement detailsButton;
-
     @FindBy(how=How.XPATH, using = "//div[@class='btn-group']//button[@title='delete']")
     public WebElement deleteTaskBtn;
-
     @FindBy(how=How.XPATH, using = "//*[@role='dialog']//button[2]")
     public WebElement confirmDeleteBtn;
-
     @FindBy(how=How.XPATH, using = "//input[@id='searchInput']")
     public WebElement searchTask;
+
 
     public void clickTaskListBtnInDashboard() {
         click(taskListBtnInDashboard);
@@ -97,7 +93,6 @@ public class TaskListPageAction extends HelperBase{
         click(detailsButton);
     }
     public Integer getNumberUsageInTask(){
-
         new WebDriverWait(wd, 20).until(ExpectedConditions.visibilityOf(tasks.get(0)));
         WebElement element=wd.findElement(By.xpath("//table//tr//span//span")); //тут не ставила классы в локаторе,т.к при каждом запуске ран классы меняются -странно так)
         String[] elements=element.getText().split(":");
@@ -119,6 +114,7 @@ public class TaskListPageAction extends HelperBase{
     private String getTextOfTask(WebElement task){
         return task.findElement(By.xpath("//a[contains(@class, 'details-lnk')")).getText();
     }
+
 }
 
 

@@ -1,12 +1,15 @@
+package Pages;
+
+import Base.HelperBase;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPageAction extends HelperBase{
+public class LoginPage extends HelperBase {
 
-    public LoginPageAction(WebDriver wd) {
+    public LoginPage(WebDriver wd) {
         super(wd);
         PageFactory.initElements(wd, this);
     }
